@@ -13,6 +13,7 @@
   <li>decryption</li>
   <li>custom keys</li>
   <li>random coprime generator</li>
+  <li>block ciphering instead of character ciphering</li>
 </ul>
 
 
