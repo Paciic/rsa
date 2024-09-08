@@ -1,9 +1,21 @@
 mod cipher;
+mod get_primes;
+mod modulo;
+mod power;
 
 use std::io;
 use cipher::crypt;
 
+
+
 fn main() {
+    let max_prime_size: u128 = 128;
+    let test = get_primes::primer(max_prime_size);
+    println!("{}", test[0]);
+
+    println!("AHHHH");
+    println!("{}", test[1]);
+
     let mut m = String::new();
     io::stdin().read_line(&mut m).expect("what.");
     //conv message to decimal
