@@ -1,7 +1,6 @@
 
 extern crate rand;
 use rand::thread_rng;
-use rand::RngCore;
 use crate::modulo::find_modulo;
 use num_bigint::{BigUint, ToBigUint, RandBigInt, ToBigInt, BigInt};
 use crate::power::pow;
@@ -27,6 +26,7 @@ fn min(a:BigUint ,b:BigUint) -> BigUint{
 
 #[allow(non_snake_case)]
 fn J(a:BigUint, n: BigUint) -> bool{
+
     if &n<=&0.to_biguint().unwrap() || &n % &2.to_biguint().unwrap() != 1.to_biguint().unwrap(){
         return false;
     }
@@ -83,8 +83,8 @@ fn gcd(a:BigUint, b:BigUint) -> bool{
         y = r.clone();
     }
 
-    if y == 1.to_biguint().unwrap(){
-        println!("is prime");
+    if x == 1.to_biguint().unwrap(){
+        println!("gcd is prime");
         return true;
     }
     false
@@ -100,10 +100,11 @@ fn check_primes(a:BigUint, b:BigUint) -> bool{
 
 pub fn get_primes(max: u128) -> Vec<BigUint>{
     //get random seed to find b and a
+    let big_seed_min = 1.to_biguint().expect("how the hell did you mess this up");
     let big_max = max.to_biguint().expect("Failed to convert into big unit");
 
     let mut temp_seed = thread_rng();
-    let seed = RandBigInt::gen_biguint_range(&mut temp_seed, &0.to_biguint().expect("how the hell did you mess this up") ,&big_max);
+    let seed = RandBigInt::gen_biguint_range(&mut temp_seed, & big_seed_min,&big_max);
 
     let b =
     //do not ask.
@@ -118,7 +119,6 @@ pub fn get_primes(max: u128) -> Vec<BigUint>{
         * 2.to_biguint().expect("how")
         + 1.to_biguint().expect("what");
 
-
     let result = vec![a, b];
     return result;
 
@@ -126,21 +126,29 @@ pub fn get_primes(max: u128) -> Vec<BigUint>{
 
 pub fn primer(max_prime_size: u128) -> Vec<BigUint>{
     let mut counter = 0;
+    let mut pass = false;
     let mut passer: Vec<BigUint> = Vec::new();
-    while counter <= 3{
-        let ab= get_primes(max_prime_size);
-        let a = ab[0].clone();
-        let b = ab[1].clone();
+
+    while pass == false{
+        if counter == 0{
+            //passer = get_primes(max_prime_size);
+            passer.push(167.to_biguint().unwrap());
+            passer.push(317.to_biguint().unwrap());
+            println!("prime1: {}", passer[0]);
+            println!("prime2: {}", passer[1])
+        }
+        let combab= &passer;
+        let a = combab[0].clone();
+        let b = combab[1].clone();
         if check_primes(a ,b) {
             counter = counter + 1;
         } else {
             counter = 0;
         }
         if counter == 3{
-            passer = ab;
+            pass = true;
         }
     }
     return passer;
-
 }
 

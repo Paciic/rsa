@@ -6,10 +6,10 @@ mod power;
 use std::io;
 use cipher::crypt;
 
-
+//TODO: fix jacobi function; fix generator recursion;
 
 fn main() {
-    let max_prime_size: u128 = 128;
+    let max_prime_size: u128 = 3456;
     let test = get_primes::primer(max_prime_size);
     println!("{}", test[0]);
 
