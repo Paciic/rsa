@@ -7,7 +7,5 @@ pub fn pow(base: BigUint, exponent: BigUint) -> BigUint {
         result = result * &base;
         i = i + 1.to_biguint().unwrap();
     }
-
     return result;
-
 }

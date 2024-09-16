@@ -7,6 +7,8 @@ fn pow(n: BigUint, exp: BigUint) -> BigUint {
 */
 pub fn crypt(messages: Vec<u8>, encryptor: u128, modulo: u64) -> Vec<BigUint> {
 
+
+
     let mut k: Vec<BigUint> = Vec::new();
     for message in messages {
         //CONV to u32768

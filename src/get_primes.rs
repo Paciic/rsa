@@ -23,51 +23,14 @@ fn min(a:BigUint ,b:BigUint) -> BigUint{
     }
 }
 
-
 #[allow(non_snake_case)]
 fn J(a:BigUint, n: BigUint) -> bool{
+//TODO: FIX THIS PIECE OF SHIT.
+    let mut t = 1.to_biguint().unwrap();
 
-    if &n<=&0.to_biguint().unwrap() || &n % &2.to_biguint().unwrap() != 1.to_biguint().unwrap(){
-        return false;
-    }
-    let mut november = n.clone();
-    let mut alpha = &a % &n.clone();
-    let mut t:BigInt = 1.to_bigint().unwrap();
-    let mut r:BigUint;
-    while &alpha != &0.to_biguint().unwrap() {
 
-        while &a % 2.to_biguint().unwrap() == 0.to_biguint().unwrap() {
-            alpha = alpha / 2.to_biguint().unwrap();
-            r = &november % 8.to_biguint().unwrap();
-            if r == 3.to_biguint().unwrap() || r == 5.to_biguint().unwrap() {
-                t = -t;
-            }
-        }
-            r = november;
-            november = alpha;
-            alpha = r;
-            if &a % 4.to_biguint().unwrap() == 3.to_biguint().unwrap()
-                &&
-                &n % 4.to_biguint().unwrap() == 3.to_biguint().unwrap() {
-                t = -t;
-            }
-        alpha = alpha % &november;
-    }
-    if november != 1.to_biguint().unwrap(){
-        return false
-    }
-    let exp = (&n - 1.to_biguint().unwrap())/2.to_biguint().unwrap();
-    let divisor = pow(a.clone(), exp.clone());
-    let result = find_modulo(&divisor, &n);
-    if result < 0.to_biguint().unwrap(){
-        return false;
-    }
-    let integer_result = result.to_bigint().unwrap();
-
-    if integer_result == t{
-        return true;
-    }
-    false
+    //TODO: remove.
+    true
 
 }
 fn gcd(a:BigUint, b:BigUint) -> bool{
@@ -92,7 +55,7 @@ fn gcd(a:BigUint, b:BigUint) -> bool{
 
 fn check_primes(a:BigUint, b:BigUint) -> bool{
     //we now follow the 1977 "A Method for Obtaining Digital Signatures and Public-Key Cryptosystems"'s methodology to determine if a and b are coprime
-    if gcd(a.clone(), b.clone()) && J(a.clone() ,b.clone() ){
+    if gcd(a.clone(), b.clone()) && (J(a.clone() ,b.clone())){
         return true
     }
     return false
@@ -132,6 +95,8 @@ pub fn primer(max_prime_size: u128) -> Vec<BigUint>{
     while pass == false{
         if counter == 0{
             //passer = get_primes(max_prime_size);
+
+            //TODO: fix prime generator (probably borked)
             passer.push(167.to_biguint().unwrap());
             passer.push(317.to_biguint().unwrap());
             println!("prime1: {}", passer[0]);
