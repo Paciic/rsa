@@ -1,8 +1,10 @@
 
 extern crate rand;
-use rand::thread_rng;
+use crate::jacobi;
+use rand::rngs::OsRng;
 use crate::modulo::find_modulo;
 use num_bigint::{BigUint, ToBigUint, RandBigInt, ToBigInt, BigInt};
+use rand::rngs;
 use crate::power::pow;
 
 //max min funcs
@@ -23,16 +25,7 @@ fn min(a:BigUint ,b:BigUint) -> BigUint{
     }
 }
 
-#[allow(non_snake_case)]
-fn J(a:BigUint, n: BigUint) -> bool{
-//TODO: FIX THIS PIECE OF SHIT.
-    let mut t = 1.to_biguint().unwrap();
 
-
-    //TODO: remove.
-    true
-
-}
 fn gcd(a:BigUint, b:BigUint) -> bool{
     let mut r:BigUint = 1.to_biguint().unwrap();
     let mut x=
@@ -55,7 +48,7 @@ fn gcd(a:BigUint, b:BigUint) -> bool{
 
 fn check_primes(a:BigUint, b:BigUint) -> bool{
     //we now follow the 1977 "A Method for Obtaining Digital Signatures and Public-Key Cryptosystems"'s methodology to determine if a and b are coprime
-    if gcd(a.clone(), b.clone()) && (J(a.clone() ,b.clone())){
+    if gcd(a.clone(), b.clone()) && (jacobi::J(a.clone() ,b.clone())){
         return true
     }
     return false
@@ -66,7 +59,7 @@ pub fn get_primes(max: u128) -> Vec<BigUint>{
     let big_seed_min = 1.to_biguint().expect("how the hell did you mess this up");
     let big_max = max.to_biguint().expect("Failed to convert into big unit");
 
-    let mut temp_seed = thread_rng();
+    let mut temp_seed = rngs::OsRng;
     let seed = RandBigInt::gen_biguint_range(&mut temp_seed, & big_seed_min,&big_max);
 
     let b =
@@ -76,7 +69,7 @@ pub fn get_primes(max: u128) -> Vec<BigUint>{
         + 1.to_biguint().expect("what");
 
     //random uniform distribution between {1...b-1} where a % 2 != 0
-    let mut temp_a = thread_rng();
+    let mut temp_a = rngs::OsRng;
     let a = RandBigInt::gen_biguint_range(&mut temp_a, &0.to_biguint().expect("how the hell did you mess this up...part 2??") ,&seed)
         //do not ask again.
         * 2.to_biguint().expect("how")
@@ -84,7 +77,6 @@ pub fn get_primes(max: u128) -> Vec<BigUint>{
 
     let result = vec![a, b];
     return result;
-
 }
 
 pub fn primer(max_prime_size: u128) -> Vec<BigUint>{
@@ -94,11 +86,9 @@ pub fn primer(max_prime_size: u128) -> Vec<BigUint>{
 
     while pass == false{
         if counter == 0{
-            //passer = get_primes(max_prime_size);
+            passer = get_primes(max_prime_size);
 
             //TODO: fix prime generator (probably borked)
-            passer.push(167.to_biguint().unwrap());
-            passer.push(317.to_biguint().unwrap());
             println!("prime1: {}", passer[0]);
             println!("prime2: {}", passer[1])
         }
